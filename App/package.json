@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "rxjs": "6.5.2"
+    "rxjs": "^7.8.1"
   }
 }
