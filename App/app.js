@@ -7,7 +7,7 @@ const {  map,shareReplay,startWith, filter,switchMap, distinctUntilChanged} = re
 const { SerialPort } = require('serialport');
 const {ReadlineParser } = require('@serialport/parser-readline');
 var spawn = require('child_process').spawn;
-const piper = spawn('/piper/process --model /piper/model.onnx --config /piper/config.onnx.json --output-raw |   aplay -r 22050 -f S16_LE -t raw -');
+const piper = spawn('/piper/process/piper --model /piper/model.onnx --config /piper/config.onnx.json --output-raw |   aplay -r 22050 -f S16_LE -t raw -');
 piper.stdin.setEncoding('utf-8');
 
 var port  = new SerialPort({
