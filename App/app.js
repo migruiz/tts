@@ -8,7 +8,9 @@ const { SerialPort } = require('serialport');
 const { ReadlineParser } = require('@serialport/parser-readline');
 var spawn = require('child_process').spawn;
 const piper = spawn('/piper/process/piper --model /piper/model.onnx --config /piper/config.onnx.json --output-raw |   aplay -r 22050 -f S16_LE -t raw -', [], { shell: true });
-piper.stdin.setEncoding('utf-8');
+piper.stdin.setEncoding('utf8');
+piper.stderr.setEncoding('utf8');
+piper.stdout.setEncoding('utf8');
 
 var port = new SerialPort({
   path: '/dev/ttyS0',
@@ -29,9 +31,15 @@ piper.stdout.on('data', (data) => {
   console.log(data);
 });
 piper.stderr.on('data', (data) => {
-  console.log('ERROR!!\r\n');
   console.log(data);
 });
+piper.on('close', (code) => {
+  console.log(`child process close all stdio with code ${code}`);
+});
+
+piper.on('exit', (code) => {
+  console.log(`child process exited with code ${code}`);
+}); 
 
 console.log("Started")
 
