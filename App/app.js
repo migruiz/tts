@@ -18,7 +18,14 @@ var port = new SerialPort({
 });
 const serialDataStream = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
 
-const runPiper = (command) => {
+
+const onSerialData = (data) => {
+  console.log('UART:', data);
+};
+
+serialDataStream.on('data', onSerialData);
+
+const runPiper = (command, handlePiper) => {
   const piper = spawn(command, [], { shell: true });
   piper.stdin.setEncoding('utf8');
   piper.stderr.setEncoding('utf8');
@@ -26,10 +33,7 @@ const runPiper = (command) => {
 
 
   const onSerialData = (data) => {
-    console.log('UART:', data);
-    if (data.length < 100) {
-      piper.stdin.write(data + "\r\n")
-    }
+    handlePiper(piper, data)
   };
 
   serialDataStream.on('data', onSerialData);
@@ -43,10 +47,10 @@ const runPiper = (command) => {
   piper.on('close', (code) => {
     console.log(`process ${piper.pid} closed with code ${code}`);
     serialDataStream.removeListener('data', onSerialData)
-    setTimeout(() => {      
+    setTimeout(() => {
       piper.removeAllListeners()
     }, 1)
-    runPiper(command)    
+    runPiper(command)
   });
 
   piper.on('exit', (code) => {
@@ -55,7 +59,23 @@ const runPiper = (command) => {
 
 }
 
-runPiper('/piper/process/piper --model /piper/model.onnx --config /piper/config.onnx.json --output-raw |   aplay -r 22050 -f S16_LE -t raw -');
+runPiper('/piper/process/piper --model /piper/model_EN.onnx --config /piper/config_EN.onnx.json --output-raw |   aplay -r 22050 -f S16_LE -t raw -',
+  (piper, data) => {
+    const {text, lg} = JSON.parse(data)
+    if (lg==='EN' && text.length < 100) {
+      piper.stdin.write(data + "\r\n")
+    }
+  }
+);
+
+runPiper('/piper/process/piper --model /piper/model_ES.onnx --config /piper/config_ES.onnx.json --output-raw |   aplay -r 22050 -f S16_LE -t raw -',
+  (piper, data) => {
+    const {text, lg} = JSON.parse(data)
+    if (lg==='ES' && text.length < 100) {
+      piper.stdin.write(data + "\r\n")
+    }
+  }
+);
 
 
 console.log("Started")
