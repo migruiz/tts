@@ -12,7 +12,7 @@ var port = new SerialPort({
   parity: 'none',
   flowControl: false
 });
-const serialDataStream = port.pipe(new ReadlineParser({ delimiter: '\r\n' }));
+const serialDataStream = port.pipe(new ReadlineParser({ delimiter: '\r\n', encoding:"latin1" }));
 
 
 const onSerialData = (data) => {
@@ -23,9 +23,9 @@ serialDataStream.on('data', onSerialData);
 
 const runPiper = (command, handlePiper) => {
   const piper = spawn(command, [], { shell: true });
-  piper.stdin.setEncoding('utf8');
-  piper.stderr.setEncoding('utf8');
-  piper.stdout.setEncoding('utf8');
+  piper.stdin.setEncoding('latin1');
+  piper.stderr.setEncoding('latin1');
+  piper.stdout.setEncoding('latin1');
 
 
   const onSerialData = (data) => {
