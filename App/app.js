@@ -12,7 +12,7 @@ var port = new SerialPort({
   parity: 'none',
   flowControl: false
 });
-const serialDataStream = port.pipe(new ReadlineParser({ delimiter: '\r\n', encoding:"latin1" }));
+const serialDataStream = port.pipe(new ReadlineParser({ delimiter: '\r\n', encoding: "latin1" }));
 
 
 const onSerialData = (data) => {
@@ -59,6 +59,9 @@ const processPiperOnSerialData = (language, piper, serialData) => {
   let text, lg
   try {
     const ttsData = JSON.parse(serialData)
+    if (ttsData.type !== 'TTS') {
+      return;
+    }
     text = ttsData.text
     lg = ttsData.lg
   } catch {
