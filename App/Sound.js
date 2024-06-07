@@ -27,6 +27,8 @@ const Sound = (soundFile) => {
         forceToTerminate = false
     }
     const stopProcessToStopSound = () => {
+        if (curremntAPlayProcess != null)
+            return;
         if (!forceToTerminate) {
             forceToTerminate = true
             curremntAPlayProcess.kill()

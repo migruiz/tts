@@ -3,10 +3,12 @@
 const { SerialPort } = require('serialport');
 const { ReadlineParser } = require('@serialport/parser-readline');
 const TTS = require('./TTS')
+const SoundSelector = require('./SoundSelector')
 
 const tts = TTS()
-
 tts.startTTSProcesses();
+
+const soundSelector = SoundSelector();
 
 var port = new SerialPort({
   path: '/dev/ttyS0',
@@ -24,6 +26,12 @@ const onSerialData = (data) => {
     const robotData = JSON.parse(data)
     if (robotData.type === 'TTS') {
       tts.handleTTSMessage(robotData)
+    }
+    if (robotData.type === 'PLAY_SOUND' || robotData.type === 'STOP_ALL_SOUNDS') {
+      soundSelector.handleSoundMessage(robotData)
+    }
+    if (robotData.type==='Init'){
+      soundSelector.stopAllSounds();
     }
   } catch {
   }
