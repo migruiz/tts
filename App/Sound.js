@@ -31,7 +31,8 @@ const Sound = (soundFile) => {
             return;
         if (!forceToTerminate) {
             forceToTerminate = true
-            curremntAPlayProcess.kill("SIGKILL")
+            curremntAPlayProcess.removeAllListeners()
+            curremntAPlayProcess.kill()
         }
     }
 
