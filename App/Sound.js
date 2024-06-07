@@ -11,10 +11,10 @@ const Sound = (soundFile) => {
         curremntAPlayProcess = spawn(command, [], { shell: true });
 
         curremntAPlayProcess.stdout.on('data', (data) => {
-            console.log(`${soundFile}-O-${curremntAPlayProcess.pid}: ${data}`);
+            console.log(`${soundFile} -O-${curremntAPlayProcess.pid}: ${data}`);
         });
         curremntAPlayProcess.stderr.on('data', (data) => {
-            console.log(`${soundFile}E-${curremntAPlayProcess.pid}: ${data}`);
+            console.log(`${soundFile} -E-${curremntAPlayProcess.pid}: ${data}`);
         });
         curremntAPlayProcess.on('close', (code) => {
             console.log(`${soundFile} - process ${curremntAPlayProcess.pid} closed with code ${code}`);
@@ -22,7 +22,7 @@ const Sound = (soundFile) => {
         });
 
         curremntAPlayProcess.on('exit', (code) => {
-            console.log(`${language} - process ${curremntAPlayProcess.pid} exited with code ${code}`);
+            console.log(`${soundFile} - process ${curremntAPlayProcess.pid} exited with code ${code}`);
         });
         forceToTerminate = false
     }
