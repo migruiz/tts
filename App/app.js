@@ -4,6 +4,11 @@ const { SerialPort } = require('serialport');
 const { ReadlineParser } = require('@serialport/parser-readline');
 var spawn = require('child_process').spawn;
 
+const PiperTTS = require('./Piper');
+const insta = PiperTTS()
+insta.doExternalProcessing();
+return;
+
 
 var port = new SerialPort({
   path: '/dev/ttyS0',
@@ -54,7 +59,6 @@ const runPiper = (command, handlePiper) => {
   });
 
 }
-
 const processPiperOnSerialData = (language, piper, serialData) => {
   let text, lg
   try {
