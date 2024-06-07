@@ -39,6 +39,14 @@ const onSerialData = (data) => {
 
 serialDataStream.on('data', onSerialData);
 
+port.on('error', function(err) {
+  console.log(err);
+})
+
+port.on('close', function(err) {
+  console.log(err);
+});
+
 
 console.log("Started")
 
