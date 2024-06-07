@@ -1,8 +1,8 @@
 const PiperTTS = require('./Piper')
 
 const TTS = () => {
-    const piperEN = PiperTTS('/piper/process/piper --model /piper/model_EN.onnx --config /piper/config_EN.onnx.json --output-raw |   aplay -r 22050 -f S16_LE -t raw -')
-    const piperES = PiperTTS('/piper/process/piper --model /piper/model_ES.onnx --config /piper/config_ES.onnx.json --output-raw |   aplay -r 22050 -f S16_LE -t raw -')
+    const piperEN = PiperTTS('EN')
+    const piperES = PiperTTS('ES')
 
     const startTTSProcesses = () => {
         piperEN.startPiperProcess();

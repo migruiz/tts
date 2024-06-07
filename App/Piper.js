@@ -1,6 +1,6 @@
 var spawn = require('child_process').spawn;
 
-const PiperTTS = (command) => {
+const PiperTTS = (language) => {
     let piperProcess;
     let terminated = false;
 
@@ -15,7 +15,7 @@ const PiperTTS = (command) => {
             piperProcess.removeAllListeners()
         }, 1)
         if (!terminated) {
-            startPiperProcess(command)
+            startPiperProcess(language)
         }
     }
 
@@ -27,6 +27,7 @@ const PiperTTS = (command) => {
     }
 
     const startPiperProcess = () => {
+        const command = `/piper/process/piper --model /piper/model_${language}.onnx --config /piper/config_${language}.onnx.json --output-raw |   aplay -r 22050 -f S16_LE -t raw -`
         piperProcess = spawn(command, [], { shell: true });
         piperProcess.stdin.setEncoding('latin1');
         piperProcess.stderr.setEncoding('latin1');
