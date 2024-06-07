@@ -35,18 +35,18 @@ const PiperTTS = (language) => {
 
 
         piperProcess.stdout.on('data', (data) => {
-            console.log(`O-${piperProcess.pid}: ${data}`);
+            console.log(`${language}-O-${piperProcess.pid}: ${data}`);
         });
         piperProcess.stderr.on('data', (data) => {
-            console.log(`E-${piperProcess.pid}: ${data}`);
+            console.log(`${language}E-${piperProcess.pid}: ${data}`);
         });
         piperProcess.on('close', (code) => {
-            console.log(`process ${piperProcess.pid} closed with code ${code}`);
+            console.log(`${language} - process ${piperProcess.pid} closed with code ${code}`);
             onPiperProcessClosed()
         });
 
         piperProcess.on('exit', (code) => {
-            console.log(`process ${piperProcess.pid} exited with code ${code}`);
+            console.log(`${language} - process ${piperProcess.pid} exited with code ${code}`);
         });
 
     }
