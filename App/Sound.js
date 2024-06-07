@@ -1,4 +1,5 @@
 var spawn = require('child_process').spawn;
+var kill = require('tree-kill');
 
 const Sound = (soundFile) => {
     let curremntAPlayProcess = null;
@@ -31,8 +32,8 @@ const Sound = (soundFile) => {
             return;
         if (!forceToTerminate) {
             forceToTerminate = true
-            curremntAPlayProcess.removeAllListeners()
-            curremntAPlayProcess.kill()
+            console.log("try to kill")
+            kill(curremntAPlayProcess.pid, 'SIGKILL');
         }
     }
 
