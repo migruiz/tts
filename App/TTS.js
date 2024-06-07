@@ -3,10 +3,12 @@ const PiperTTS = require('./Piper')
 const TTS = () => {
     const piperEN = PiperTTS('EN')
     const piperES = PiperTTS('ES')
+    const piperPL = PiperTTS('PL')
 
     const startTTSProcesses = () => {
         piperEN.startPiperProcess();
         piperES.startPiperProcess();
+        piperPL.startPiperProcess();
     }
     const handleTTSMessage = (data) => {
         const { text, lg } = data
@@ -16,6 +18,9 @@ const TTS = () => {
             }
             else if (lg === "ES") {
                 piperES.sendTextToPiper(text)
+            }
+            else if (lg === "PL") {
+                piperPL.sendTextToPiper(text)
             }
         }
 
