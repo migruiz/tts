@@ -17,6 +17,11 @@ const SerialReader = (onRobotData) => {
 
         port.on('error', function (err) {
             console.log(`err + ${err}`);
+            setTimeout(() => {
+                //port.removeAllListeners()
+                //serialDataStream.removeAllListeners()
+                initNewPort()
+            }, 100)
         })
 
         port.on('close', function (err) {
@@ -25,7 +30,7 @@ const SerialReader = (onRobotData) => {
                 //port.removeAllListeners()
                 //serialDataStream.removeAllListeners()
                 initNewPort()
-            }, 1)
+            }, 100)
         });
 
         const onSerialData = (data) => {
