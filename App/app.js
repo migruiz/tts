@@ -9,12 +9,6 @@ tts.startTTSProcesses();
 const soundSelector = SoundSelector();
 
 
-
-const serialReader = SerialReader(onRobotSerialData)
-
-
-
-
 const onRobotSerialData = (robotData) => {
   if (robotData.type === 'TTS') {
     tts.handleTTSMessage(robotData)
@@ -26,7 +20,7 @@ const onRobotSerialData = (robotData) => {
     soundSelector.stopAllSounds();
   }
 }
-
+const serialReader = SerialReader(onRobotSerialData)
 serialReader.startReading();
 
 console.log("Started")
