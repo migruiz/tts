@@ -30,6 +30,8 @@ const SoundSelector = () => {
     const stopAllSounds = () => {
         policeSound.stopProcessToStopSound()
         discoSound.stopProcessToStopSound()
+        icecream1.stopProcessToStopSound()
+        icecream2.stopProcessToStopSound()
     }
 
     return {
